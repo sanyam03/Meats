@@ -1,0 +1,52 @@
+{
+  "name": "bsm-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/arcone-tech/bsm-backend.git",
+  "author": "Kunal Gosrani <iamkunalgosrani@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+		"dev": "nodemon -r tsconfig-paths/register src/index.ts",
+		"start": "node dist/index.js",
+		"clean": "rimraf dist/",
+		"test": "mocha",
+		"build": "yarn run clean && tsc -p tsconfig.build.json && tsc-alias",
+		"typeorm": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm -f ./src/core/database/ormconfig.ts",
+		"migration:generate": "yarn run typeorm migration:generate",
+		"migration:run": "yarn run typeorm migration:run"
+	},
+	"dependencies": {
+		"bcrypt": "5.0.1",
+		"cors": "2.8.5",
+		"dayjs": "1.11.2",
+		"dotenv": "16.0.0",
+		"express": "4.18.1",
+		"jsonwebtoken": "8.5.1",
+		"lodash": "4.17.21",
+		"pg": "8.7.3",
+		"typeorm": "0.2.44",
+		"yup": "0.32.11"
+	},
+	"devDependencies": {
+		"@ngneat/falso": "5.3.0",
+		"@types/bcrypt": "5.0.0",
+		"@types/chai-things": "0.0.35",
+		"@types/cors": "2.8.12",
+		"@types/express": "4.17.13",
+		"@types/jsonwebtoken": "8.5.8",
+		"@types/lodash": "4.14.178",
+		"@types/mocha": "9.1.1",
+		"@types/node": "17.0.10",
+		"chai": "4.3.6",
+		"chai-http": "4.3.0",
+		"chai-things": "0.2.0",
+		"mocha": "10.0.0",
+		"nodemon": "2.0.15",
+		"rimraf": "3.0.2",
+		"ts-node": "10.4.0",
+		"tsc-alias": "1.6.4",
+		"tsconfig-paths": "3.12.0",
+		"typescript": "4.5.4"
+	}
+}
+
