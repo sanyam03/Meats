@@ -1,5 +1,5 @@
 import { createDatabaseSession, DatabaseSession } from "@core/database"
-import { findOneByIdOrThrow } from "@domain/shared/helpers"
+import { getOneByIdOrThrow } from "@domain/shared/helpers"
 import { Category, CategoryId } from "./Category.entity"
 import { checkCategoryNameAvailabilityV1 } from "./checkCategoryNameAvailabilityV1"
 
@@ -17,7 +17,7 @@ export async function createCategoryV1(
 
 		let parentCategory = null
 		if (payload.parentCategoryId) {
-			parentCategory = await findOneByIdOrThrow(runner, {
+			parentCategory = await getOneByIdOrThrow(runner, {
 				entity: Category,
 				id: payload.parentCategoryId,
 				errorMessage: "Parent category not found",
