@@ -1,4 +1,4 @@
-import { AuthRole } from "@core/auth"
+import { authenticateRequest, AuthRole } from "@core/auth"
 import { createdResponse, HttpApi } from "@core/http"
 import { CategoryId } from "@domain/Category/Category.entity"
 import { createCategoryV1 } from "@domain/Category/createCategoryV1"
@@ -17,8 +17,10 @@ const bodySchema = yup
 export const apiCategoryAddV1 = new HttpApi({
 	endpoint: "/category/add/v1",
 	handler: async ({ req }) => {
+		authenticateRequest(req, [AuthRole.ADMIN])
 		const body = await parseYupSchema(bodySchema, req.body)
 		const parentCategoryId = body.parentCategoryId as CategoryId | null | undefined
+
 		const category = await createCategoryV1({ ...body, parentCategoryId })
 		return createdResponse(serializeCategoryV1(category, AuthRole.ADMIN))
 	},

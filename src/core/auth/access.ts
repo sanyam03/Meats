@@ -1,6 +1,6 @@
 import { ForbiddenError } from "@core/http"
 import { Request } from "express"
-import { AccessToken, validateAuthToken } from "./authToken"
+import { AccessToken, validateAccessToken } from "./authToken"
 import { AuthRole } from "./types"
 
 function getAccessToken(authHeaderValue: string) {
@@ -14,7 +14,7 @@ function getAuth(req: Request) {
 	if (!authHeaderValue) throw new ForbiddenError("Authentication is required")
 
 	const accessToken = getAccessToken(authHeaderValue)
-	return validateAuthToken(accessToken)
+	return validateAccessToken(accessToken)
 }
 
 export function authenticateRequest(req: Request, allowedRoles?: AuthRole[]) {

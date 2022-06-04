@@ -1,4 +1,4 @@
-import { randomPassword } from "@domain/shared/test/Auth.resource"
+import { randomPassword } from "@domain/shared/test/randomGenerators"
 import { createAdminV1 } from "../createAdminV1"
 import { generateAdminUsername } from "./generateAdminUsername"
 
