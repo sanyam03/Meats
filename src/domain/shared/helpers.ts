@@ -2,7 +2,7 @@ import { UnprocessableEntityError } from "@core/http"
 import { EntityTarget, QueryRunner } from "typeorm"
 import { BaseEntity } from "./BaseEntity"
 
-export async function findOneByIdOrThrow<Entity extends BaseEntity<any>>(
+export async function getOneByIdOrThrow<Entity extends BaseEntity<any>>(
 	runner: QueryRunner,
 	{
 		entity,
