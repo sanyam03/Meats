@@ -1,10 +1,10 @@
-import { AuthRole, validateAuthToken } from "@core/auth"
+import { AuthRole, validateAccessToken } from "@core/auth"
 import { truncateDatabase } from "@core/database/truncateDatabase"
 import { HttpStatusCode } from "@core/http"
 import { UnPromise } from "@core/types"
 import { generateAdmin } from "@domain/Admin/test/generateAdmin"
 import { generateAdminUsername } from "@domain/Admin/test/generateAdminUsername"
-import { randomPassword } from "@domain/shared/test/Auth.resource"
+import { randomPassword } from "@domain/shared/test/randomGenerators"
 import { httpApiRequest } from "@utils/test"
 import { expect } from "chai"
 
@@ -49,7 +49,7 @@ describe(`API: ${endpoint}`, () => {
 		expect(res).exist
 		expect(res.accessToken).exist
 
-		const auth = validateAuthToken(res.accessToken)
+		const auth = validateAccessToken(res.accessToken)
 		expect(auth.role).equal(AuthRole.ADMIN)
 		expect(auth.id).equal(admin.id)
 	})

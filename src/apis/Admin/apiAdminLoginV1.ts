@@ -1,4 +1,4 @@
-import { AuthRole, createAuthToken } from "@core/auth"
+import { AuthRole, createAuthTokens } from "@core/auth"
 import { HttpApi, UnprocessableEntityError } from "@core/http"
 import { listAdminV1 } from "@domain/Admin/listAdminV1"
 import { parseYupSchema } from "apis/validators"
@@ -30,7 +30,6 @@ export const apiAdminLoginV1 = new HttpApi({
 			throw new UnprocessableEntityError("Incorrect username or password")
 		}
 
-		const accessToken = createAuthToken({ role: AuthRole.ADMIN, id: admin.id })
-		return { accessToken }
+		return createAuthTokens({ role: AuthRole.ADMIN, id: admin.id })
 	},
 })

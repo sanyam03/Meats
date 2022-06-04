@@ -10,19 +10,23 @@ const subject = "auth-token"
 const expiresInHours = 12
 
 export type AccessToken = Brand<string, "AccessToken">
+export type RefreshToken = Brand<string, "RefreshToken">
 
-export function createAuthToken(payload: AuthPayload) {
-	return jwt.sign(payload, secret, {
+export function createAuthTokens(payload: AuthPayload) {
+	const accessToken = jwt.sign(payload, secret, {
 		issuer,
 		expiresIn: `${expiresInHours}h`,
 		subject,
 	}) as AccessToken
+	const refreshToken: RefreshToken | null = null
+
+	return { accessToken, refreshToken }
 }
 
-export function validateAuthToken(accessToken: AccessToken): AuthPayload {
+export function validateAccessToken(accessToken: AccessToken): AuthPayload {
 	try {
 		const { role, id } = jwt.verify(accessToken, secret, { issuer }) as AuthPayload
-		return { role, id }
+		return { role, id } as AuthPayload
 	} catch (err) {
 		if (err instanceof JsonWebTokenError) {
 			throw new UnauthorisedError("Invalid access token")
