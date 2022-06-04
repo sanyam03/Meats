@@ -1,6 +1,7 @@
-import { AccessToken } from "@core/auth"
+import { AccessToken, AuthRole } from "@core/auth"
 import { truncateDatabase } from "@core/database/truncateDatabase"
 import { HttpStatusCode } from "@core/http"
+import { expectCategoryV1Schema } from "@domain/Category/test/expectCategoryV1Schema"
 import { generateAdminAuth } from "@domain/shared/test/generateAdminAuth"
 import { randProductCategory } from "@ngneat/falso"
 import { httpApiRequest } from "@utils/test"
@@ -51,6 +52,7 @@ describe(`API: ${endpoint}`, () => {
 			expectedStatusCode: HttpStatusCode.CREATED,
 		})
 		expect(res).exist
+		expectCategoryV1Schema(res, AuthRole.ADMIN)
 		expect(res.title).equal(title)
 	})
 
