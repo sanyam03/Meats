@@ -8,7 +8,7 @@ import * as yup from "yup"
 
 const bodySchema = yup.object({
 	id: yup.string().uuid().required(),
-	parentCategoryId: yup.string().uuid().nullable().required(),
+	parentCategoryId: yup.string().uuid().nullable().default(null),
 })
 
 export const apiCategoryUpdateParentCategoryV1 = new HttpApi({

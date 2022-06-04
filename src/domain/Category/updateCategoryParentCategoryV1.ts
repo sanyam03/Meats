@@ -24,7 +24,7 @@ export async function updateCategoryParentCategoryV1(
 		if (parentCategoryId) {
 			const parentCategory = await getOneByIdOrThrow(runner, {
 				entity: Category,
-				id,
+				id: parentCategoryId,
 				errorMessage: "Parent category not found",
 			})
 
@@ -34,11 +34,11 @@ export async function updateCategoryParentCategoryV1(
 			category.parentCategory = null
 		}
 
-		await runner.manager.save(category)
+		const updatedCategory = await runner.manager.save(category)
 
 		for (const { id } of listOfCategoriesToBeRefreshed) {
 			await refreshCategoryV1({ id }, session)
 		}
-		return category
+		return updatedCategory
 	})
 }

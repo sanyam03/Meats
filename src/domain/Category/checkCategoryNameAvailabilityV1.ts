@@ -2,7 +2,7 @@ import { createDatabaseSession, DatabaseSession } from "@core/database"
 import { ConflictError } from "@core/http"
 import { listCategoryV1 } from "./listCategoryV1"
 
-export async function checkCategoryNameAvailabilityV1(
+export async function checkCategoryTitleAvailabilityV1(
 	{ title }: { title: string },
 	existingSession?: DatabaseSession,
 ): Promise<void> {
