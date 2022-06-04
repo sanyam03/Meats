@@ -1,7 +1,7 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class categoryUpdate1654329773205 implements MigrationInterface {
-    name = 'categoryUpdate1654329773205'
+export class parentCategory1654330699718 implements MigrationInterface {
+    name = 'parentCategory1654330699718'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`ALTER TABLE "category" ADD "categoryUrl" character varying(100) NOT NULL`);
@@ -13,17 +13,21 @@ export class categoryUpdate1654329773205 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "category" ADD "countProductVariants" integer NOT NULL DEFAULT '0'`);
         await queryRunner.query(`ALTER TABLE "category" ADD "countPublishedProductVariants" integer NOT NULL DEFAULT '0'`);
         await queryRunner.query(`ALTER TABLE "category" ADD "isPublished" boolean NOT NULL DEFAULT false`);
+        await queryRunner.query(`ALTER TABLE "category" ADD "parentCategoryId" uuid`);
         await queryRunner.query(`ALTER TABLE "category" DROP CONSTRAINT "UQ_9f16dbbf263b0af0f03637fa7b5"`);
         await queryRunner.query(`ALTER TABLE "category" DROP COLUMN "title"`);
         await queryRunner.query(`ALTER TABLE "category" ADD "title" character varying(100) NOT NULL`);
         await queryRunner.query(`ALTER TABLE "category" ADD CONSTRAINT "UQ_9f16dbbf263b0af0f03637fa7b5" UNIQUE ("title")`);
+        await queryRunner.query(`ALTER TABLE "category" ADD CONSTRAINT "FK_9e5435ba76dbc1f1a0705d4db43" FOREIGN KEY ("parentCategoryId") REFERENCES "category"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`ALTER TABLE "category" DROP CONSTRAINT "FK_9e5435ba76dbc1f1a0705d4db43"`);
         await queryRunner.query(`ALTER TABLE "category" DROP CONSTRAINT "UQ_9f16dbbf263b0af0f03637fa7b5"`);
         await queryRunner.query(`ALTER TABLE "category" DROP COLUMN "title"`);
         await queryRunner.query(`ALTER TABLE "category" ADD "title" character varying(50) NOT NULL`);
         await queryRunner.query(`ALTER TABLE "category" ADD CONSTRAINT "UQ_9f16dbbf263b0af0f03637fa7b5" UNIQUE ("title")`);
+        await queryRunner.query(`ALTER TABLE "category" DROP COLUMN "parentCategoryId"`);
         await queryRunner.query(`ALTER TABLE "category" DROP COLUMN "isPublished"`);
         await queryRunner.query(`ALTER TABLE "category" DROP COLUMN "countPublishedProductVariants"`);
         await queryRunner.query(`ALTER TABLE "category" DROP COLUMN "countProductVariants"`);
