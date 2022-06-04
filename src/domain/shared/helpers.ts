@@ -1,5 +1,5 @@
 import { UnprocessableEntityError } from "@core/http"
-import { EntityTarget, QueryRunner } from "typeorm"
+import { Entity, EntityTarget, QueryRunner } from "typeorm"
 import { BaseEntity } from "./BaseEntity"
 
 export async function getOneByIdOrThrow<Entity extends BaseEntity<any>>(
@@ -8,9 +8,10 @@ export async function getOneByIdOrThrow<Entity extends BaseEntity<any>>(
 		entity,
 		id,
 		errorMessage,
-	}: { entity: EntityTarget<Entity>; id: Entity["id"]; errorMessage: string },
+	}: { entity: EntityTarget<Entity>; id: Entity["id"]; errorMessage?: string },
 ): Promise<Entity> {
 	const el = await runner.manager.findOneOrFail(entity, id)
-	if (!el) throw new UnprocessableEntityError(errorMessage)
+	if (!el)
+		throw new UnprocessableEntityError(errorMessage || `${Entity().name} not found`)
 	return el
 }

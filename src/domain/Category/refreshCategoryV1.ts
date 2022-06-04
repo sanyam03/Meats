@@ -2,14 +2,18 @@ import { createDatabaseSession, DatabaseSession } from "@core/database"
 import { getOneByIdOrThrow } from "@domain/shared/helpers"
 import { Category, CategoryId } from "./Category.entity"
 
-export async function deleteCategoryV1(
+export async function refreshCategoryV1(
 	{ id }: { id: CategoryId },
 	existingSession?: DatabaseSession,
-): Promise<void> {
+): Promise<Category> {
 	const session = createDatabaseSession(existingSession)
 	return await session.withTransaction(async (runner) => {
-		const category = await getOneByIdOrThrow(runner, { entity: Category, id })
+		const [category, countSubCategories] = await Promise.all([
+			getOneByIdOrThrow(runner, { entity: Category, id }),
+			runner.manager.count(Category, { where: { parentCategory: { id } } }),
+		])
 
-		await runner.manager.remove(category)
+		category.countSubCategories = countSubCategories
+		return await runner.manager.save(category)
 	})
 }
