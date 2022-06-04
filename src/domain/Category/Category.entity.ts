@@ -1,5 +1,6 @@
 import { Brand } from "@core/types"
 import { BaseEntity } from "@domain/shared/BaseEntity"
+import { generateUrlFromTitle } from "@utils/helpers"
 import "reflect-metadata"
 import { Column, Entity, ManyToOne, OneToMany, RelationId } from "typeorm"
 
@@ -41,21 +42,19 @@ export class Category extends BaseEntity<CategoryId> {
 	parentCategory!: Category | null
 
 	@RelationId((category: Category) => category.parentCategory)
-	parentCategoryIdId!: Category["id"] | null
+	parentCategoryId!: Category["id"] | null
 
 	@OneToMany(() => Category, (category) => category.parentCategory)
 	subCategories!: Category[]
 
 	build(init: {
 		title: string
-		categoryUrl?: string
 		description?: string
 		parentCategory?: Category | null
 	}) {
 		this.parentCategory = init.parentCategory ?? null
 		this.title = init.title
-		this.categoryUrl =
-			init.categoryUrl || this.title.toLowerCase().split(" ").join("-")
+		this.categoryUrl = generateUrlFromTitle(init.title)
 		this.description = init.description ?? ""
 
 		return this
