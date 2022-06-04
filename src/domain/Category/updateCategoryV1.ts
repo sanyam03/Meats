@@ -2,7 +2,7 @@ import { createDatabaseSession, DatabaseSession } from "@core/database"
 import { getOneByIdOrThrow } from "@domain/shared/helpers"
 import _ from "lodash"
 import { Category, CategoryId } from "./Category.entity"
-import { checkCategoryNameAvailabilityV1 } from "./checkCategoryNameAvailabilityV1"
+import { checkCategoryTitleAvailabilityV1 } from "./checkCategoryNameAvailabilityV1"
 
 export async function updateCategoryV1(
 	{
@@ -21,7 +21,7 @@ export async function updateCategoryV1(
 
 		if (update.title) {
 			if (update.title !== category.title) {
-				await checkCategoryNameAvailabilityV1({ title: update.title }, session)
+				await checkCategoryTitleAvailabilityV1({ title: update.title }, session)
 				category.title = update.title
 			}
 		}

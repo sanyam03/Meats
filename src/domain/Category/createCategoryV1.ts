@@ -1,7 +1,8 @@
 import { createDatabaseSession, DatabaseSession } from "@core/database"
 import { getOneByIdOrThrow } from "@domain/shared/helpers"
 import { Category, CategoryId } from "./Category.entity"
-import { checkCategoryNameAvailabilityV1 } from "./checkCategoryNameAvailabilityV1"
+import { checkCategoryTitleAvailabilityV1 } from "./checkCategoryNameAvailabilityV1"
+import { refreshCategoryV1 } from "./refreshCategoryV1"
 
 export async function createCategoryV1(
 	payload: {
@@ -13,7 +14,7 @@ export async function createCategoryV1(
 ): Promise<Category> {
 	const session = createDatabaseSession(existingSession)
 	return await session.withTransaction(async (runner) => {
-		await checkCategoryNameAvailabilityV1(payload, session)
+		await checkCategoryTitleAvailabilityV1(payload, session)
 
 		let parentCategory = null
 		if (payload.parentCategoryId) {
@@ -25,6 +26,11 @@ export async function createCategoryV1(
 		}
 
 		const category = new Category().build({ ...payload, parentCategory })
-		return await runner.manager.save(category)
+		const createdCategory = await runner.manager.save(category)
+
+		if (createdCategory.parentCategoryId) {
+			await refreshCategoryV1({ id: createdCategory.parentCategoryId }, session)
+		}
+		return createdCategory
 	})
 }
