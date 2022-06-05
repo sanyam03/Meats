@@ -7,7 +7,7 @@ import { createCategoryV1 } from "../createCategoryV1"
 export async function generateCategory(options?: {
 	withParentCategory?: boolean
 }): Promise<Category> {
-	const title = await getAvailableCategoryTile()
+	const title = await getAvailableCategoryTitle()
 	const description = randProductDescription()
 	const parentCategoryId = options?.withParentCategory
 		? (await generateCategory()).id
@@ -16,7 +16,7 @@ export async function generateCategory(options?: {
 	return await createCategoryV1({ title, description, parentCategoryId })
 }
 
-export async function getAvailableCategoryTile() {
+export async function getAvailableCategoryTitle() {
 	let title = randProductCategory()
 
 	do {
