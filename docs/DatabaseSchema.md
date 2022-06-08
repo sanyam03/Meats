@@ -49,6 +49,14 @@ V - Data for view (should be refreshed or auto-calculate on update)<br />
 -   isPublished
 -   countVariants (V)
 
+## Color
+
+-   id (PK)
+-   createdAt
+-   updatedAt
+-   title (UNQ)
+-   hexCode (UNQ)
+
 ## Brand
 
 -   id (PK)
@@ -66,12 +74,14 @@ V - Data for view (should be refreshed or auto-calculate on update)<br />
 -   createdAt
 -   updatedAt
 -   productId (FK to Product)
+-   colorId? (FK to Color)
 -   size
--   productVariantCode (UNQ)
+-   variantCode (UNQ)
 -   retailPrice
 -   discountedPrice
+-   productVariantCode (V)
 -   countStock (V)
--   (UNQ of productId, size)
+-   (UNQ of productId, colorId, size)
 
 ## ProductVariantStockEntry
 
