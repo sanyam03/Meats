@@ -16,9 +16,9 @@ export async function updateCategoryParentCategoryV1(
 			: parentCategoryId === null
 		if (isParentCategorySame) return category
 
-		let listOfCategoriesToBeRefreshed: Category[] = []
-		if (category.parentCategory) {
-			listOfCategoriesToBeRefreshed.push(category.parentCategory)
+		let listOfCategoryIdsToBeRefreshed: CategoryId[] = []
+		if (category.parentCategoryId) {
+			listOfCategoryIdsToBeRefreshed.push(category.parentCategoryId)
 		}
 
 		if (parentCategoryId) {
@@ -29,14 +29,14 @@ export async function updateCategoryParentCategoryV1(
 			})
 
 			category.parentCategory = parentCategory
-			listOfCategoriesToBeRefreshed.push(parentCategory)
+			listOfCategoryIdsToBeRefreshed.push(parentCategory.id)
 		} else {
 			category.parentCategory = null
 		}
 
 		const updatedCategory = await runner.manager.save(category)
 
-		for (const { id } of listOfCategoriesToBeRefreshed) {
+		for (const id of listOfCategoryIdsToBeRefreshed) {
 			await refreshCategoryV1({ id }, session)
 		}
 		return updatedCategory
