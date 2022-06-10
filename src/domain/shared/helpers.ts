@@ -1,4 +1,4 @@
-import { UnprocessableEntityError } from "@core/http"
+import { UnprocessableEntityError } from "http-rest-api"
 import { Entity, EntityTarget, QueryRunner } from "typeorm"
 import { BaseEntity } from "./BaseEntity"
 

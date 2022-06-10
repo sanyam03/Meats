@@ -1,6 +1,6 @@
 import { expect } from "chai"
 import _ from "lodash"
-import { HttpMethod, HttpStatusCode } from "@core/http"
+import { HttpMethod, HttpStatusCode } from "http-rest-api"
 import { httpAgent } from "./setup"
 
 export async function httpApiRequest({

@@ -1,4 +1,4 @@
-import { ConflictError } from "@core/http"
+import { ConflictError } from "http-rest-api"
 import { randProductCategory, randProductDescription } from "@ngneat/falso"
 import { Category } from "../Category.entity"
 import { checkCategoryTitleAvailabilityV1 } from "../checkCategoryNameAvailabilityV1"

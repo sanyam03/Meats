@@ -1,5 +1,5 @@
 import { createDatabaseSession, DatabaseSession } from "@core/database"
-import { ConflictError } from "@core/http"
+import { ConflictError } from "http-rest-api"
 import { listAdminV1 } from "./listAdminV1"
 
 export async function checkAdminUsernameAvailabilityV1(

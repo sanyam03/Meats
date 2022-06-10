@@ -1,5 +1,5 @@
 import { AuthRole, createAuthTokens } from "@core/auth"
-import { HttpApi, UnprocessableEntityError } from "@core/http"
+import { HttpRestApi, UnprocessableEntityError } from "http-rest-api"
 import { listAdminV1 } from "@domain/Admin/listAdminV1"
 import { parseYupSchema } from "apis/validators"
 import * as yup from "yup"
@@ -15,8 +15,9 @@ const bodySchema = yup
 	})
 	.required()
 
-export const apiAdminLoginV1 = new HttpApi({
-	endpoint: "/admin/login/v1",
+export const apiAdminLoginV1 = new HttpRestApi({
+	method: "post",
+	path: "/admin/login/v1",
 	handler: async ({ req }) => {
 		const { username, password } = await parseYupSchema(bodySchema, req.body)
 

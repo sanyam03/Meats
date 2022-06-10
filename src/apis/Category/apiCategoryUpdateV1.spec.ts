@@ -1,6 +1,6 @@
 import { AuthRole } from "@core/auth"
 import { truncateDatabase } from "@core/database/truncateDatabase"
-import { HttpStatusCode } from "@core/http"
+import { HttpStatusCode } from "http-rest-api"
 import { expectCategoryV1Schema } from "@domain/Category/test/expectCategoryV1Schema"
 import { generateCategory } from "@domain/Category/test/generateCategory"
 import { generateAdminAuth } from "@domain/shared/test/generateAdminAuth"

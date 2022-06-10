@@ -1,7 +1,7 @@
 import { jwtConfigs, serverConfigs } from "@core/configs"
 import { Brand } from "@core/types"
 import jwt, { JsonWebTokenError } from "jsonwebtoken"
-import { UnauthorisedError } from "../http"
+import { UnauthorisedError } from "http-rest-api"
 import { AuthPayload } from "./types"
 
 const secret = jwtConfigs.secret

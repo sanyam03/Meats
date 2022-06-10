@@ -1,6 +1,6 @@
 import { AuthRole, validateAccessToken } from "@core/auth"
 import { truncateDatabase } from "@core/database/truncateDatabase"
-import { HttpStatusCode } from "@core/http"
+import { HttpStatusCode } from "http-rest-api"
 import { UnPromise } from "@core/types"
 import { generateAdmin } from "@domain/Admin/test/generateAdmin"
 import { generateAdminUsername } from "@domain/Admin/test/generateAdminUsername"

@@ -1,4 +1,4 @@
-import { BadRequestError } from "@core/http"
+import { BadRequestError } from "http-rest-api"
 import * as yup from "yup"
 
 export async function parseYupSchema<T extends yup.AnySchema>(schema: T, data: any) {
