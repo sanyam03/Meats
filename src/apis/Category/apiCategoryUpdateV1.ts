@@ -1,9 +1,9 @@
 import { authenticateRequest, AuthRole } from "@core/auth"
-import { HttpApi } from "@core/http"
 import { CategoryId } from "@domain/Category/Category.entity"
 import { serializeCategoryV1 } from "@domain/Category/serializeCategoryV1"
 import { updateCategoryV1 } from "@domain/Category/updateCategoryV1"
 import { parseYupSchema } from "apis/validators"
+import { HttpRestApi } from "http-rest-api"
 import * as yup from "yup"
 
 const bodySchema = yup.object({
@@ -14,8 +14,9 @@ const bodySchema = yup.object({
 	}),
 })
 
-export const apiCategoryUpdateV1 = new HttpApi({
-	endpoint: "/category/update/v1",
+export const apiCategoryUpdateV1 = new HttpRestApi({
+	method: "post",
+	path: "/category/update/v1",
 	handler: async ({ req }) => {
 		authenticateRequest(req, [AuthRole.ADMIN])
 		const body = await parseYupSchema(bodySchema, req.body)

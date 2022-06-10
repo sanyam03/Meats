@@ -1,10 +1,11 @@
 import { authenticateRequest, AuthRole } from "@core/auth"
-import { HttpApi } from "@core/http"
 import { listCategoryV1 } from "@domain/Category/listCategoryV1"
 import { serializeCategoryListV1 } from "@domain/Category/serializeCategoryV1"
+import { HttpRestApi } from "http-rest-api"
 
-export const apiCategoryListV1 = new HttpApi({
-	endpoint: "/category/list/v1",
+export const apiCategoryListV1 = new HttpRestApi({
+	method: "post",
+	path: "/category/list/v1",
 	handler: async ({ req }) => {
 		const allowedRoles = [AuthRole.ADMIN, AuthRole.GUEST, AuthRole.USER]
 		const { role } = authenticateRequest(req, allowedRoles)

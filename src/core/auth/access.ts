@@ -1,5 +1,5 @@
-import { ForbiddenError } from "@core/http"
 import { Request } from "express"
+import { ForbiddenError } from "http-rest-api"
 import { AccessToken, validateAccessToken } from "./authToken"
 import { AuthRole } from "./types"
 

@@ -1,9 +1,9 @@
 import { authenticateRequest, AuthRole } from "@core/auth"
-import { createdResponse, HttpApi } from "@core/http"
 import { CategoryId } from "@domain/Category/Category.entity"
 import { createCategoryV1 } from "@domain/Category/createCategoryV1"
 import { serializeCategoryV1 } from "@domain/Category/serializeCategoryV1"
 import { parseYupSchema } from "apis/validators"
+import { HttpRestApi, sendCreatedResponse } from "http-rest-api"
 import * as yup from "yup"
 
 const bodySchema = yup
@@ -14,14 +14,15 @@ const bodySchema = yup
 	})
 	.required()
 
-export const apiCategoryAddV1 = new HttpApi({
-	endpoint: "/category/add/v1",
+export const apiCategoryAddV1 = new HttpRestApi({
+	method: "post",
+	path: "/category/add/v1",
 	handler: async ({ req }) => {
 		authenticateRequest(req, [AuthRole.ADMIN])
 		const body = await parseYupSchema(bodySchema, req.body)
 		const parentCategoryId = body.parentCategoryId as CategoryId | null | undefined
 
 		const category = await createCategoryV1({ ...body, parentCategoryId })
-		return createdResponse(serializeCategoryV1(category, AuthRole.ADMIN))
+		return sendCreatedResponse(serializeCategoryV1(category, AuthRole.ADMIN))
 	},
 })
