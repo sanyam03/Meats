@@ -29,8 +29,20 @@ V - Data for view (should be refreshed or auto-calculate on update)<br />
 -   coverPhotoUrl?
 -   countSubCategories (V)
 -   countPublishedSubCategories (V)
--   countProducts (V)
--   countPublishedProducts (V)
+-   countProductVariants (V)
+-   countPublishedProductVariants (V)
+-   isPublished (V)
+
+## ProductBrand
+
+-   id (PK)
+-   createdAt
+-   updatedAt
+-   title (UNQ)
+-   description?
+-   logoUrl?
+-   countProductVariants (V)
+-   countPublishedProductVariants (V)
 -   isPublished (V)
 
 ## Product
@@ -39,49 +51,36 @@ V - Data for view (should be refreshed or auto-calculate on update)<br />
 -   createdAt
 -   updatedAt
 -   categoryId (FK to Category)
--   productCode (UNQ)
+-   productBrandId? (FK to Brand)
 -   title
--   productUrl (UNQ)
--   productKeywords?
--   thumbnailUrl?
 -   description?
 -   specificationInJson?
 -   isPublished
 -   countVariants (V)
 
-## Color
+## ProductColor
 
 -   id (PK)
 -   createdAt
 -   updatedAt
--   title (UNQ)
--   hexCode (UNQ)
-
-## Brand
-
--   id (PK)
--   createdAt
--   updatedAt
--   title (UNQ)
--   description?
--   logoUrl
--   isPublished (V)
--   countProducts (V)
+-   productId (FK to Product)
+-   title
+-   thumbnailUrl?
+-   UNQ (productId, colorName)
 
 ## ProductVariant
 
 -   id (PK)
 -   createdAt
 -   updatedAt
--   productId (FK to Product)
--   colorId? (FK to Color)
+-   productColorId (FK to ProductColor)
 -   size
--   variantCode (UNQ)
--   retailPrice
+-   productVariantCode (UNQ)
+-   productVariantUrl (UNQ)
+-   maxRetailPrice
 -   discountedPrice
--   productVariantCode (V)
--   countStock (V)
--   (UNQ of productId, colorId, size)
+-   currentStock (V)
+-   (UNQ of productColorId, size)
 
 ## ProductVariantStockEntry
 
