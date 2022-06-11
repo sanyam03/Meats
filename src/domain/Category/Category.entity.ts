@@ -1,4 +1,5 @@
 import { Brand } from "@core/types"
+import { Product } from "@domain/Product/Product.entity"
 import { BaseEntity } from "@domain/shared/BaseEntity"
 import { generateUrlFromTitle } from "@utils/helpers"
 import "reflect-metadata"
@@ -8,6 +9,12 @@ export type CategoryId = Brand<string, "CategoryId">
 
 @Entity()
 export class Category extends BaseEntity<CategoryId> {
+	@ManyToOne(() => Category, (category) => category.subCategories, { nullable: true })
+	parentCategory!: Category | null
+
+	@RelationId((category: Category) => category.parentCategory)
+	parentCategoryId!: Category["id"] | null
+
 	@Column({ type: "varchar", length: 100, unique: true })
 	title!: string
 
@@ -22,6 +29,11 @@ export class Category extends BaseEntity<CategoryId> {
 
 	@Column({ type: "varchar", length: 200, nullable: true })
 	coverPhotoUrl!: string | null
+
+	/**
+	 *
+	 * Following fields should be auto calculated
+	 */
 
 	@Column({ default: 0 })
 	countSubCategories!: number
@@ -38,14 +50,16 @@ export class Category extends BaseEntity<CategoryId> {
 	@Column({ default: false })
 	isPublished!: boolean
 
-	@ManyToOne(() => Category, (category) => category.subCategories, { nullable: true })
-	parentCategory!: Category | null
-
-	@RelationId((category: Category) => category.parentCategory)
-	parentCategoryId!: Category["id"] | null
+	/**
+	 *
+	 * Following fields are for maintaining relations
+	 */
 
 	@OneToMany(() => Category, (category) => category.parentCategory)
 	subCategories!: Category[]
+
+	@OneToMany(() => Product, (product) => product.category)
+	products!: Product[]
 
 	build(init: {
 		title: string
