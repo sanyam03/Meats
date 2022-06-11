@@ -10,7 +10,7 @@ export async function truncateDatabase() {
 
 	const session = createDatabaseSession()
 	await session.withTransaction(async (runner) => {
-		await runner.manager.clear(Admin)
-		await runner.manager.clear(Category)
+		await runner.manager.delete(Admin, {})
+		await runner.manager.delete(Category, {})
 	})
 }
