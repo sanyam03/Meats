@@ -8,7 +8,7 @@ import { Check, Column, Entity, ManyToOne, OneToMany, RelationId, Unique } from 
 export type ProductVariantId = Brand<string, "ProductVariantId">
 
 @Entity()
-@Unique(["productColorId", "size"])
+@Unique(["productColor", "size"])
 @Check(`"maxRetailPrice" > 0`)
 @Check(`"discountedPrice" > 0 AND "discountedPrice" <= "maxRetailPrice"`)
 export class ProductVariant extends BaseEntity<ProductVariantId> {

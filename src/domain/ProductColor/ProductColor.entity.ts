@@ -8,7 +8,7 @@ import { Column, Entity, ManyToOne, OneToMany, RelationId, Unique } from "typeor
 export type ProductColorId = Brand<string, "ProductColorId">
 
 @Entity()
-@Unique(["productId", "title"])
+@Unique(["product", "title"])
 export class ProductColor extends BaseEntity<ProductColorId> {
 	@ManyToOne(() => Product, (product) => product.colors)
 	product!: Product
