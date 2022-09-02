@@ -1,6 +1,7 @@
 import { serverConfigs } from "@core/configs/server.configs"
 import { Admin } from "@domain/Admin/Admin.entity"
 import { Category } from "@domain/Category/Category.entity"
+import { ProductBrand } from "@domain/ProductBrand/ProductBrand.entity"
 import { createDatabaseSession } from "."
 
 export async function truncateDatabase() {
@@ -12,5 +13,6 @@ export async function truncateDatabase() {
 	await session.withTransaction(async (runner) => {
 		await runner.manager.delete(Admin, {})
 		await runner.manager.delete(Category, {})
+		await runner.manager.delete(ProductBrand, {})
 	})
 }

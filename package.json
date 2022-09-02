@@ -1,9 +1,9 @@
 {
-	"name": "bsm-backend",
+	"name": "Meats-backend",
 	"version": "1.0.0",
 	"main": "index.js",
 	"repository": "https://github.com/arcone-tech/bsm-backend.git",
-	"author": "Kunal Gosrani <iamkunalgosrani@gmail.com>",
+	"author": "Sanyam Bharani",
 	"license": "MIT",
 	"scripts": {
 		"dev": "nodemon -r tsconfig-paths/register src/index.ts",
@@ -20,6 +20,7 @@
 		"cors": "2.8.5",
 		"dayjs": "1.11.2",
 		"dotenv": "16.0.0",
+		"google-auth-library": "^8.0.3",
 		"http-rest-api": "^0.1.0",
 		"jsonwebtoken": "8.5.1",
 		"lodash": "4.17.21",
